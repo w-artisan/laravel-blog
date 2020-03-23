@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use \App\BlogPost;
 use Illuminate\Http\Request;
 use \App\Http\Requests\StorePost;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -15,6 +16,19 @@ class PostController extends Controller
      */
     public function index()
     {
+        DB::connection()->enableQueryLog();
+
+        $posts = BlogPost::with('comments')->get();
+
+        foreach ($posts as $post) {
+            foreach ($post->comments as $comment) {
+                echo $comment->content;
+                echo '<br>';
+            }
+        }
+
+        dd(DB::getQueryLog());
+
         return view('posts.index', ['posts' => BlogPost::all()] );
     }
 
