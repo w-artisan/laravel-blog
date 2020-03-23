@@ -1,0 +1,12 @@
+//
+
+@import url('https://fonts.googleapis.com/css?family=Nutito');
+
+@import 'variables';
+
+@import '~bootstrap/scss/bootstrap';
+
+.navbar-laravel {
+    background-color: #c8c8c8;
+    box-shadow: 0 2px 4px rgba(0,0, 0, 0.04);
+}
