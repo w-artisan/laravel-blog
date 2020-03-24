@@ -2,10 +2,11 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Support\Arr;
-use App\BlogPost;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\BlogPost;
+use App\Comment;
+
 
 class PostTest extends TestCase
 {
@@ -19,7 +20,7 @@ class PostTest extends TestCase
     }
 
 
-    public function testSee1BlogPostWhenThereIsOne()
+    public function testSee1BlogPostWhenThereIs1WithNoComments()
     {
         // Arrange part of the Test
         $post = $this->createDummyBlogPost();
@@ -37,6 +38,23 @@ class PostTest extends TestCase
             'content' => 'New Content',
         ]);
     }
+
+    public function testSee1BlogPostWithComments()
+    {
+        // Arrange part of the Test
+        $post = $this->createDummyBlogPost();
+        factory(Comment::class, 4)->create([
+            'blog_post_id' => $post->id
+        ]);
+
+        // Act
+        $response = $this->get('/posts');
+
+        // Assert
+        $response->assertSeeText('4 comments');
+
+    }
+
 
 
     public function testStoreValid()
@@ -93,21 +111,21 @@ class PostTest extends TestCase
             $this->assertDatabaseHas('blog_posts', [
             'title' => 'Params Title'
             ]);
-        }
+    }
 
 
-        public function testDelete()
-        {
-            $post = $this->createDummyBlogPost();
+    public function testDelete()
+    {
+        $post = $this->createDummyBlogPost();
 
-            $this->delete("/posts/{$post->id}")
-            ->assertStatus(302)
-            ->assertSessionHas('status');
-            // dd($post->toArray());
-            $this->assertEquals(session('status'), 'Blog post was deleted!');
-            $this->assertDatabaseMissing('blog_posts', $post->toArray());
+        $this->delete("/posts/{$post->id}")
+        ->assertStatus(302)
+        ->assertSessionHas('status');
+        // dd($post->toArray());
+        $this->assertEquals(session('status'), 'Blog post was deleted!');
+        $this->assertDatabaseMissing('blog_posts', $post->toArray());
 
-        }
+    }
 
     private function createDummyBlogPost(): BlogPost
     {
