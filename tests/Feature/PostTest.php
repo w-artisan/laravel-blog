@@ -129,15 +129,19 @@ class PostTest extends TestCase
 
     private function createDummyBlogPost(): BlogPost
     {
-        $post = new BlogPost();
-        // Not Needed fields for testing
+//        $post = new BlogPost();
+
+        $post = factory(BlogPost::class)->state('new-title')->create();
+
+
+//        // Not Needed fields for testing
         $post->makeHidden([
             'created_at',
             'updated_at',
         ]);
-        $post->title = 'New Title';
-        $post->content = 'New Content';
-        $post->save();
+//        $post->title = 'New Title';
+//        $post->content = 'New Content';
+//        $post->save();
 
         return $post;
     }
