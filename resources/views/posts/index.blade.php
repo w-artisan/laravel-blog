@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.app')
 
 @section('title')
     List of Blog Posts
@@ -18,20 +18,23 @@
             @else
                 <p>No Comments yet!</p>
             @endif
+            @guest
+                @else
+                    <div class="row">
+                        <a href="{{ route('posts.edit', ['post' => $post->id]) }}" class="btn btn-primary">
+                            Edit
+                        </a>
+                        <form action="{{ route('posts.destroy', ['post' => $post->id]) }}"
+                            method="post"
+                            class="">
+                            @csrf
+                            @method('DELETE')
 
-            <div class="row">
-                <a href="{{ route('posts.edit', ['post' => $post->id]) }}" class="btn btn-primary">
-                    Edit
-                </a>
-                <form action="{{ route('posts.destroy', ['post' => $post->id]) }}"
-                    method="post"
-                    class="">
-                    @csrf
-                    @method('DELETE')
+                            <input type="submit" value='Delete!' class="btn btn-default"/>
+                        </form>
+                    </div>
+            @endguest
 
-                    <input type="submit" value='Delete!' class="btn btn-default"/>
-                </form>
-            </div>
             <p>
                 Added {{ $post->created_at->diffForHumans() }}
             </p>

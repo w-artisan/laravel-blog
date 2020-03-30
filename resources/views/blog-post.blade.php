@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.app')
 
 @section('content')
     {!! $welcome !!}{{ $data['title'] }}<br>

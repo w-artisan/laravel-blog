@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!-- my adds -->
 </head>
 <body>
     <div id="app">
@@ -38,6 +39,9 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        <a class="p-2 text-dark" href="{{ route('home') }}">Home</a>
+                        <a class="p-2 text-dark" href="{{ route('contact') }}">Contact</a>
+                        <a class="p-2 text-dark" href="{{ route('posts.index') }}">Blog Posts</a>
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
@@ -49,6 +53,7 @@
                                 </li>
                             @endif
                         @else
+                            <a class="p-2 text-dark" href="{{ route('posts.create') }}">Add Blog Post</a>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -71,10 +76,17 @@
                 </div>
             </div>
         </nav>
+        <br>
+        <div class="container">
 
-        <main class="py-4">
             @yield('content')
-        </main>
+
+        </div>
+
+{{--        <main class="py-4">--}}
+{{--        @yield('content')--}}
+{{--        </main>--}}
     </div>
+
 </body>
 </html>

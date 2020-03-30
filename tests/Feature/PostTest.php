@@ -64,7 +64,8 @@ class PostTest extends TestCase
             'content' => 'At least 10 characters',
         ];
 
-        $this->post('/posts', $params)
+        $this->actingAs($this->user())
+            ->post('/posts', $params)
             ->assertStatus(302)
             ->assertSessionHas('status');
 
@@ -79,7 +80,8 @@ class PostTest extends TestCase
             'content' => 'y',
         ];
 
-        $this->post('/posts', $params)
+        $this->actingAs($this->user())
+            ->post('/posts', $params)
             ->assertStatus(302)
             ->assertSessionHas('errors');
 
@@ -101,9 +103,10 @@ class PostTest extends TestCase
             'content' => 'Params Content'
         ];
 
-        $this->put("/posts/{$post->id}", $params)
-        ->assertStatus(302)
-        ->assertSessionHas('status');
+        $this->actingAs($this->user())
+            ->put("/posts/{$post->id}", $params)
+            ->assertStatus(302)
+            ->assertSessionHas('status');
         // dd($post->toArray());
 
         $this->assertEquals(session('status'), 'Blog post was updated!');
@@ -118,9 +121,10 @@ class PostTest extends TestCase
     {
         $post = $this->createDummyBlogPost();
 
-        $this->delete("/posts/{$post->id}")
-        ->assertStatus(302)
-        ->assertSessionHas('status');
+        $this->actingAs($this->user())
+            ->delete("/posts/{$post->id}")
+            ->assertStatus(302)
+            ->assertSessionHas('status');
         // dd($post->toArray());
         $this->assertEquals(session('status'), 'Blog post was deleted!');
         $this->assertDatabaseMissing('blog_posts', $post->toArray());

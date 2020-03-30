@@ -2,13 +2,18 @@
 
 namespace Tests\Feature;
 
+
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
 
 class HomeTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function testHomePageIsWorkingCorrectly()
     {
-        $response = $this->get('/');
+        $response = $this->actingAs($this->user())->get('/');
 
         $response->assertSeeText('Home Page');
         $response->assertSeeText('This is a Home Page');
@@ -16,7 +21,7 @@ class HomeTest extends TestCase
 
     public function testContactPageIsWorkingCorrectly()
     {
-        $response = $this->get('/contact');
+        $response = $this->actingAs($this->user())->get('/contact');
 
         $response->assertSeeText('Contacts');
         $response->assertSeeText('Hello, this is contacts');

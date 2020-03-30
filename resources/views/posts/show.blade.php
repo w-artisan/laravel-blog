@@ -30,7 +30,7 @@
     <h4>Comments</h4>
 
     @forelse ($post->comments as $comment)
-    <p>
+    <p>m
         {{ $comment->content }}
     </p>
     <p class="text-muted">
