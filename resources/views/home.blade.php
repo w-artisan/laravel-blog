@@ -6,9 +6,10 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Dashboard</div>
-                    <p>Home Page</p>
-                    <p>This is a Home Page</p>
+
                 <div class="card-body">
+                    <h1>Home Page</h1>
+                    <p>This is a Home Page</p>
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
