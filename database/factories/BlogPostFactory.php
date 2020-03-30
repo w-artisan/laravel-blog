@@ -12,7 +12,7 @@ $factory->define(BlogPost::class, function (Faker $faker) {
     ];
 });
 
-$factory->state(App\BlogPost::class, 'new-title', function (Faker $faker) {
+$factory->state(BlogPost::class, 'new-title', function (Faker $faker) {
     return [
         'title' => 'New Title',
         'content' => 'New Content'
