@@ -5,6 +5,11 @@
 @endsection
 
 @section('content')
+    @if (session()->has('status'))
+        <p style="color:green">
+            {{ session()->get('status') }}
+        </p>
+    @endif
     @forelse ($posts as $post)
             <h3>
                 <a href="{{ route('posts.show', ['post' => $post->id]) }}">{{ $post->title }}</a>
