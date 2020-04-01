@@ -14,11 +14,7 @@ class PostController extends Controller
         $this->middleware('auth')
             ->only(['create', 'store', 'edit', 'update', 'destroy']);
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         // DB::connection()->enableQueryLog();
@@ -40,12 +36,7 @@ class PostController extends Controller
             ['posts' => BlogPost::withCount('comments')->get()]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         return view('posts.show', [
