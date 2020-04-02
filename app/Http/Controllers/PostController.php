@@ -6,6 +6,7 @@ use \App\BlogPost;
 use Illuminate\Http\Request;
 use \App\Http\Requests\StorePost;
 // use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -55,41 +56,57 @@ class PostController extends Controller
 
         // dd($validatedData);
 
-        // $blogPost = new BlogPost();
-        $blogPost = BlogPost::create($validatedData);
-        // $blogPost->title = $request->input('title', '');
-        // $blogPost->content = $request->input('content', '');
-        // $blogPost->save();
+        // $post = new BlogPost();
+        $post = BlogPost::create($validatedData);
+        // $post->title = $request->input('title', '');
+        // $post->content = $request->input('content', '');
+        // $post->save();
 
         $request->session()->flash('status', 'Blog post was created!');
 
         // return redirect()->route('posts.index');
-        return redirect()->route('posts.show', ['post' => $blogPost->id]);
+        return redirect()->route('posts.show', ['post' => $post->id]);
     }
 
     public function edit($id)
     {
         $post = BlogPost::findOrFail($id);
 
+        // if (Gate::denies('update-post', $post)) {
+        //     abort(403, "You can't edit this blog post!");
+        // }
+        $this->authorize('update-post', $post);
+
         return view('posts.edit', ['post' => $post]);
     }
 
     public function update(StorePost $request, $id)
     {
-        $blogPost = BlogPost::findOrFail($id);
+        $post = BlogPost::findOrFail($id);
+
+        // if (Gate::denies('update-post', $post)) {
+        //     abort(403, "You can't edit this blog post!");
+        // }
+        $this->authorize('update-post', $post);
+
         $validatedData = $request->validated();
 
-        $blogPost->fill($validatedData);
-        $blogPost->save();
+        $post->fill($validatedData);
+        $post->save();
         $request->session()->flash('status', 'Blog post was updated!');
 
-        return redirect()->route('posts.show', ['post' => $blogPost->id]);
+        return redirect()->route('posts.show', ['post' => $post->id]);
     }
 
     public function destroy(Request $request, $id)
     {
-        $blogPost = BlogPost::findOrFail($id);
-        $blogPost->delete();
+        $post = BlogPost::findOrFail($id);
+        $post->delete();
+
+        // if (Gate::denies('delete-post', $post)) {
+        //     abort(403, "You can't delete this blog post!");
+        // }
+        $this->authorize('delete-post', $post);
 
         // BlogPost::destroy($id);
         $request->session()->flash('status', 'Blog post was deleted!');
