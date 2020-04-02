@@ -28,6 +28,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function blogPost()
+    {
+        return $this->hasMany(App\BlogPost::class);
+    }
+
     /**
      * The attributes that should be cast to native types.
      *

@@ -17,7 +17,10 @@
             <p>
                 {{ $post->content }}
             </p>
-
+            <p class="text-muted">
+                Added {{ $post->created_at->diffForHumans() }},
+                by {{ $post->user->name }}
+            </p>
             @if ($post->comments_count)
                 <p>{{ $post->comments_count }} comments</p>
             @else
@@ -39,10 +42,7 @@
                         </form>
                     </div>
             @endguest
-
-            <p>
-                Added {{ $post->created_at->diffForHumans() }}
-            </p>
+                    <br>
         @empty
         <p>No blog posts yet!</p>
     @endforelse
