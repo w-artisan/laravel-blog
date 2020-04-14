@@ -26,10 +26,34 @@
             @else
                 <p>No Comments yet!</p>
             @endif
-            @guest
+            <div class="row">
+            @can('update', $post)
+                <a href="{{ route('posts.edit', ['post' => $post->id]) }}"
+                    class="btn btn-primary">
+                    Edit
+                </a>
+            @endcan
+
+            {{-- @cannot('delete', $post)
+                <p>You can not delete this post</p>
+            @endcannot --}}
+
+            @can('delete', $post)
+                <form action="{{ route('posts.destroy', ['post' => $post->id]) }}"
+                    method="post"
+                    class="">
+                    @csrf
+                    @method('DELETE')
+
+                    <input type="submit" value='Delete!' class="btn btn-default"/>
+                </form>
+            @endcan
+            </div>
+            {{-- @guest
                 @else
                     <div class="row">
-                        <a href="{{ route('posts.edit', ['post' => $post->id]) }}" class="btn btn-primary">
+                        <a href="{{ route('posts.edit', ['post' => $post->id]) }}"
+                            class="btn btn-primary">
                             Edit
                         </a>
                         <form action="{{ route('posts.destroy', ['post' => $post->id]) }}"
@@ -41,8 +65,8 @@
                             <input type="submit" value='Delete!' class="btn btn-default"/>
                         </form>
                     </div>
-            @endguest
-                    <br>
+            @endguest --}}
+                <br>
         @empty
         <p>No blog posts yet!</p>
     @endforelse
