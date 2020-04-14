@@ -11,22 +11,22 @@
         </p>
     @endif
     @forelse ($posts as $post)
-            <h3>
-                <a href="{{ route('posts.show', ['post' => $post->id]) }}">{{ $post->title }}</a>
-            </h3>
-            <p>
-                {{ $post->content }}
-            </p>
-            <p class="text-muted">
-                Added {{ $post->created_at->diffForHumans() }},
-                by {{ $post->user->name }}
-            </p>
-            @if ($post->comments_count)
-                <p>{{ $post->comments_count }} comments</p>
-            @else
-                <p>No Comments yet!</p>
-            @endif
-            <div class="row">
+        <h3>
+            <a href="{{ route('posts.show', ['post' => $post->id]) }}">{{ $post->title }}</a>
+        </h3>
+        <p>
+            {{ $post->content }}
+        </p>
+        <p class="text-muted">
+            Added {{ $post->created_at->diffForHumans() }},
+            by {{ $post->user->name }}
+        </p>
+        @if ($post->comments_count)
+            <p>{{ $post->comments_count }} comments</p>
+        @else
+            <p>No Comments yet!</p>
+        @endif
+        <div class="row">
             @can('update', $post)
                 <a href="{{ route('posts.edit', ['post' => $post->id]) }}"
                     class="btn btn-primary">
@@ -48,8 +48,8 @@
                     <input type="submit" value='Delete!' class="btn btn-default"/>
                 </form>
             @endcan
-            </div>
-            {{-- @guest
+        </div>
+        {{-- @guest
                 @else
                     <div class="row">
                         <a href="{{ route('posts.edit', ['post' => $post->id]) }}"

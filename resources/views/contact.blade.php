@@ -5,6 +5,8 @@
     <p>Hello, this is contacts</p>
 
     @can('home.secret')
-        <p>Spetial contact details</p>
+        <a href="{{ route('secret') }}">
+            <p>Spetial contact details</p>
+        </a>
     @endcan
 @endsection

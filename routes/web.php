@@ -19,6 +19,9 @@ Route::get('/', 'HomeController@index')->name('home');
 // Route::get('/home', 'HomeController@home')->name('home');
 
 Route::get('/contact', 'HomeController@contact')->name('contact');
+Route::get('/secret', 'HomeController@secret')
+    ->name('secret')
+    ->middleware('can:home.secret');
 
 // Route::get('/blog-post/{id}/{welcome?}', 'HomeController@blogPost')->name('blog-post');
 
